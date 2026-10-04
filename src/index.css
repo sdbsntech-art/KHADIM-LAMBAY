@@ -321,49 +321,60 @@ h2 {
 }
 
 .wave-payment-card {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
   align-items: center;
-  gap: 16px;
-  margin-top: 14px;
-  padding: 16px;
-  border: 1px solid #d6e5ed;
-  border-radius: 6px;
-  background: #f4faff;
+  gap: 22px;
+  max-width: 560px;
+  margin: 0 auto 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
 }
 
-.wave-payment-card img {
-  flex: 0 0 auto;
-  width: 110px;
-  max-height: 46px;
+.wave-qr-link {
+  display: block;
+  line-height: 0;
+}
+
+.wave-qr-link img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   object-fit: contain;
 }
 
-.wave-payment-card strong {
-  display: block;
-  color: #172b3a;
+.wave-payment-details h3 {
+  margin: 12px 0 4px;
+  font-size: 20px;
 }
 
-.wave-payment-card p {
-  margin: 3px 0 0;
+.wave-payment-details p {
+  margin: 0 0 16px;
   color: var(--text-muted);
   font-size: 13px;
 }
 
-.payment-notice {
-  margin: 8px 0 0;
-  padding: 12px;
-  border-radius: 5px;
+.wave-link-button {
+  min-height: 40px;
+}
+
+.report-intro {
+  margin: 0 0 8px;
+  text-align: left;
+}
+
+.report-intro h3 {
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.report-intro p {
+  color: var(--text-muted);
   font-size: 14px;
-}
-
-.payment-notice.error {
-  background: #fff2f0;
-  color: #8d2920;
-}
-
-.payment-notice.success {
-  background: #edf8f0;
-  color: #145c36;
 }
 
 .recipient-note {
@@ -550,8 +561,9 @@ h2 {
   }
 
   .wave-payment-card {
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 110px 1fr;
+    gap: 14px;
+    padding: 14px;
   }
 
   .site-footer {

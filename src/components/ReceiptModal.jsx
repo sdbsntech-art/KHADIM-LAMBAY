@@ -29,14 +29,11 @@ export default function ReceiptModal({ data, onClose }) {
           <div><dt>Contributeur</dt><dd>{data.isAnonymous ? 'Anonyme' : `${data.firstName} ${data.lastName}`.trim()}</dd></div>
           {data.phone && <div><dt>Téléphone</dt><dd>{data.phone}</dd></div>}
           {data.location && <div><dt>Localité</dt><dd>{data.location}</dd></div>}
-          <div><dt>Montant versé</dt><dd>{data.amount.toLocaleString('fr-FR')} FCFA</dd></div>
           <div><dt>Moyen de transfert</dt><dd>{data.paymentMethod}</dd></div>
-          <div><dt>Transaction Wave</dt><dd>{data.waveTransactionId}</dd></div>
         </dl>
 
         <p className="receipt-status">
-          Le statut du paiement a été vérifié auprès de Wave. Appuyez sur le bouton ci-dessous pour
-          envoyer ce rapport au CCJ dans WhatsApp.
+          Merci pour votre contribution. Vous pouvez envoyer ce rapport au CCJ dans WhatsApp.
         </p>
         <div className="receipt-actions">
           <a

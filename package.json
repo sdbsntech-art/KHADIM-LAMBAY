@@ -5,12 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:api": "node --env-file-if-exists=.env server.js",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview",
-    "start": "node --env-file-if-exists=.env server.js",
-    "test": "node --test"
+    "preview": "vite preview"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
