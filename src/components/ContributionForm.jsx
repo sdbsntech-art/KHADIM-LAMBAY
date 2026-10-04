@@ -53,10 +53,10 @@ export default function ContributionForm({ onSubmitContribution }) {
           <img src="/wave-payment-qr.png" alt="QR code Wave pour payer Zayel Khalifa" />
         </a>
         <div className="wave-payment-details">
-          <h3>Payer avec Wave</h3>
+          <h3>Contribuer avec Wave</h3>
           <p>Scannez le QR code ou ouvrez le lien de paiement.</p>
           <a className="button wave-link-button" href={WAVE_PAYMENT_URL} rel="noreferrer" target="_blank">
-            Payer avec Wave
+            Contribuer avec Wave
           </a>
         </div>
       </div>
