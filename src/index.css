@@ -270,6 +270,17 @@ h2 {
   font-weight: 400;
 }
 
+.contribution-form .field-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.contribution-form .field-pair > div {
+  display: grid;
+  gap: 8px;
+}
+
 .contribution-form input,
 .contribution-form select,
 .contribution-form textarea {
@@ -283,6 +294,76 @@ h2 {
 
 .contribution-form textarea {
   resize: vertical;
+}
+
+.contribution-form .checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.contribution-form .checkbox-row input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--green);
+}
+
+.field-help {
+  margin: -6px 0 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.wave-payment-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid #d6e5ed;
+  border-radius: 6px;
+  background: #f4faff;
+}
+
+.wave-payment-card img {
+  flex: 0 0 auto;
+  width: 110px;
+  max-height: 46px;
+  object-fit: contain;
+}
+
+.wave-payment-card strong {
+  display: block;
+  color: #172b3a;
+}
+
+.wave-payment-card p {
+  margin: 3px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.payment-notice {
+  margin: 8px 0 0;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.payment-notice.error {
+  background: #fff2f0;
+  color: #8d2920;
+}
+
+.payment-notice.success {
+  background: #edf8f0;
+  color: #145c36;
 }
 
 .recipient-note {
@@ -427,6 +508,12 @@ h2 {
   background: #f5f7f5;
 }
 
+.button:disabled {
+  border-color: #aab4ad;
+  background: #aab4ad;
+  cursor: not-allowed;
+}
+
 @media (max-width: 700px) {
   .site-header,
   .site-footer {
@@ -456,6 +543,15 @@ h2 {
 
   .contribution-form {
     padding: 20px;
+  }
+
+  .contribution-form .field-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .wave-payment-card {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .site-footer {

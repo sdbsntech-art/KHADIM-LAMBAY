@@ -1,4 +1,4 @@
-import { buildContributionWhatsAppUrl, CONTRIBUTION_PHONE_DISPLAY } from '../utils/whatsapp';
+import { buildContributionWhatsAppUrl } from '../utils/whatsapp';
 
 export default function ReceiptModal({ data, onClose }) {
   const formattedDate = new Date(data.date).toLocaleString('fr-FR', {
@@ -24,16 +24,19 @@ export default function ReceiptModal({ data, onClose }) {
         </p>
 
         <dl className="receipt-details">
-          <div><dt>Référence</dt><dd>{data.transactionRef}</dd></div>
+          <div><dt>Référence du rapport</dt><dd>{data.reference || data.transactionRef}</dd></div>
           <div><dt>Date</dt><dd>{formattedDate}</dd></div>
-          <div><dt>Nom</dt><dd>{data.fullName || 'Anonyme'}</dd></div>
+          <div><dt>Contributeur</dt><dd>{data.isAnonymous ? 'Anonyme' : `${data.firstName} ${data.lastName}`.trim()}</dd></div>
+          {data.phone && <div><dt>Téléphone</dt><dd>{data.phone}</dd></div>}
+          {data.location && <div><dt>Localité</dt><dd>{data.location}</dd></div>}
+          <div><dt>Montant versé</dt><dd>{data.amount.toLocaleString('fr-FR')} FCFA</dd></div>
           <div><dt>Moyen de transfert</dt><dd>{data.paymentMethod}</dd></div>
-          <div><dt>Destinataire</dt><dd>{CONTRIBUTION_PHONE_DISPLAY}</dd></div>
+          <div><dt>Transaction Wave</dt><dd>{data.waveTransactionId}</dd></div>
         </dl>
 
         <p className="receipt-status">
-          Ce récapitulatif n’est pas une preuve de paiement. Votre transfert doit être vérifié par
-          l’équipe du CCJ.
+          Le statut du paiement a été vérifié auprès de Wave. Appuyez sur le bouton ci-dessous pour
+          envoyer ce rapport au CCJ dans WhatsApp.
         </p>
         <div className="receipt-actions">
           <a
@@ -42,7 +45,7 @@ export default function ReceiptModal({ data, onClose }) {
             rel="noreferrer"
             target="_blank"
           >
-            Rouvrir WhatsApp
+            Envoyer le rapport sur WhatsApp
           </a>
           <button className="button button-secondary" onClick={onClose} type="button">Fermer</button>
         </div>
