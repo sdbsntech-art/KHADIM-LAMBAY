@@ -352,6 +352,15 @@ h2 {
   font-size: 20px;
 }
 
+.wave-app-icon {
+  display: block;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .wave-payment-details p {
   margin: 0 0 16px;
   color: var(--text-muted);
@@ -406,6 +415,26 @@ h2 {
 .form-submit {
   width: 100%;
   margin-top: 12px;
+}
+
+.whatsapp-submit {
+  gap: 10px;
+}
+
+.whatsapp-submit img {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.payment-confirmation.disabled {
+  color: #849087;
+  cursor: not-allowed;
+}
+
+.payment-confirmation input:disabled {
+  cursor: not-allowed;
 }
 
 .form-privacy {

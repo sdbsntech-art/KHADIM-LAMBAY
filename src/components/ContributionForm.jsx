@@ -2,19 +2,47 @@ import { useState } from 'react';
 import { buildContributionWhatsAppUrl } from '../utils/whatsapp';
 
 const WAVE_PAYMENT_URL = 'https://pay.wave.com/m/M_sn_iRpPVxT7n-Ey/c/sn/';
+const WAVE_PAYMENT_STARTED_KEY = 'ccj-wave-payment-started';
+const CONTRIBUTION_DRAFT_KEY = 'ccj-contribution-draft';
+
+function readContributionDraft() {
+  try {
+    return JSON.parse(sessionStorage.getItem(CONTRIBUTION_DRAFT_KEY) || 'null') || {};
+  } catch {
+    return {};
+  }
+}
+
+const savedDraft = readContributionDraft();
 
 export default function ContributionForm({ onSubmitContribution }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [location, setLocation] = useState('');
-  const [message, setMessage] = useState('');
-  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [firstName, setFirstName] = useState(savedDraft.firstName || '');
+  const [lastName, setLastName] = useState(savedDraft.lastName || '');
+  const [phone, setPhone] = useState(savedDraft.phone || '');
+  const [location, setLocation] = useState(savedDraft.location || '');
+  const [message, setMessage] = useState(savedDraft.message || '');
+  const [isAnonymous, setIsAnonymous] = useState(savedDraft.isAnonymous || false);
+  const [waveOpened, setWaveOpened] = useState(
+    sessionStorage.getItem(WAVE_PAYMENT_STARTED_KEY) === 'true',
+  );
   const [paymentCompleted, setPaymentCompleted] = useState(false);
+
+  const handleWaveRedirect = () => {
+    sessionStorage.setItem(WAVE_PAYMENT_STARTED_KEY, 'true');
+    sessionStorage.setItem(CONTRIBUTION_DRAFT_KEY, JSON.stringify({
+      firstName,
+      lastName,
+      phone,
+      location,
+      message,
+      isAnonymous,
+    }));
+    setWaveOpened(true);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!paymentCompleted) return;
+    if (!waveOpened || !paymentCompleted) return;
 
     const contribution = {
       firstName: firstName.trim(),
@@ -28,10 +56,9 @@ export default function ContributionForm({ onSubmitContribution }) {
       reference: `CCJ-${Date.now().toString().slice(-8)}`,
     };
 
-    onSubmitContribution({
-      ...contribution,
-      whatsappUrl: buildContributionWhatsAppUrl(contribution),
-    });
+    sessionStorage.removeItem(WAVE_PAYMENT_STARTED_KEY);
+    sessionStorage.removeItem(CONTRIBUTION_DRAFT_KEY);
+    onSubmitContribution({ ...contribution, whatsappUrl: buildContributionWhatsAppUrl(contribution) });
   };
 
   return (
@@ -47,15 +74,15 @@ export default function ContributionForm({ onSubmitContribution }) {
           aria-label="Ouvrir le lien de paiement Wave"
           className="wave-qr-link"
           href={WAVE_PAYMENT_URL}
-          rel="noreferrer"
-          target="_blank"
+          onClick={handleWaveRedirect}
         >
           <img src="/wave-payment-qr.png" alt="QR code Wave pour payer Zayel Khalifa" />
         </a>
         <div className="wave-payment-details">
+          <img className="wave-app-icon" src="/wave-app-icon.png" alt="" />
           <h3>Contribuer avec Wave</h3>
           <p>Scannez le QR code ou ouvrez le lien de paiement.</p>
-          <a className="button wave-link-button" href={WAVE_PAYMENT_URL} rel="noreferrer" target="_blank">
+          <a className="button wave-link-button" href={WAVE_PAYMENT_URL} onClick={handleWaveRedirect}>
             Contribuer avec Wave
           </a>
         </div>
@@ -136,18 +163,20 @@ export default function ContributionForm({ onSubmitContribution }) {
           value={message}
         />
 
-        <label className="checkbox-row payment-confirmation" htmlFor="paymentCompleted">
+        <label className={`checkbox-row payment-confirmation ${!waveOpened ? 'disabled' : ''}`} htmlFor="paymentCompleted">
           <input
             checked={paymentCompleted}
+            disabled={!waveOpened}
             id="paymentCompleted"
             onChange={(event) => setPaymentCompleted(event.target.checked)}
             required
             type="checkbox"
           />
-          <span>J’ai effectué ma contribution avec Wave</span>
+          <span>{waveOpened ? 'Je suis revenu de Wave et j’ai effectué ma contribution' : 'Ouvrez d’abord Wave pour effectuer votre contribution'}</span>
         </label>
 
-        <button className="button form-submit" disabled={!paymentCompleted} type="submit">
+        <button className="button form-submit whatsapp-submit" disabled={!waveOpened || !paymentCompleted} type="submit">
+          <img src="/wave-app-icon.png" alt="" />
           Valider et envoyer sur WhatsApp
         </button>
       </form>
