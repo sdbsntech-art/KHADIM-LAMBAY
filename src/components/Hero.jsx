@@ -13,11 +13,23 @@ export default function Hero({ onDonateClick }) {
         </button>
         <p className="privacy-note">Votre contribution et vos coordonnées restent privées.</p>
       </div>
-      <img
-        className="hero-image"
-        src="/hero.jpg"
-        alt="Affiche des 72 heures de la jeunesse de Lambaye"
-      />
+      <div className="hero-visual">
+        <img
+          className="hero-image"
+          src="/hero.jpg"
+          alt="Jeunes de Lambaye engagés dans une action de reboisement"
+        />
+        <a
+          className="flyer-preview"
+          href="/flyer-72h.png"
+          rel="noreferrer"
+          target="_blank"
+          aria-label="Voir l’affiche des 72 heures de la jeunesse de Lambaye"
+        >
+          <img src="/flyer-72h.png" alt="" />
+          <span>Voir l’affiche</span>
+        </a>
+      </div>
     </section>
   );
 }
